@@ -1,44 +1,24 @@
-import { Box, Image, Text } from '@chakra-ui/react';
 import React from 'react';
+import './AppBanner.scss';
 
 interface Props {
-    imageSrc: string;
-    imageFormat?: { w?: string | string[]; h?: string | string[] };
+    imageSrc?: string;
+    imageFormat?: { w?: string; h?: string };
     title?: string;
 }
 
 const AppBanner: React.VFC<Props> = ({ imageSrc, title, imageFormat }) => {
     return (
-        <Box id="banner" position={'relative'} borderRadius={25} textAlign={'center'} w={'100%'}>
-            <Image src={imageSrc} borderRadius={[10, 25]} w={imageFormat?.w} h={imageFormat?.h} fit="cover" />
-            <Box
-                w={'100%'}
-                h={'100%'}
-                top={'50%'}
-                transform={'translate(0%, -50%)'}
-                position={'absolute'}
-                backgroundColor={'#000000'}
-                mixBlendMode="darken"
-                opacity={0.3}
-                borderRadius={[10, 25]}
+        <div id="banner">
+            <img
+                src={imageSrc}
+                style={{ width: imageFormat?.w, height: imageFormat?.h }}
+                width={imageFormat?.w}
+                height={imageFormat?.h}
             />
-            {title && (
-                <Text
-                    position={'absolute'}
-                    top={'50%'}
-                    left={'50%'}
-                    transform={'translate(-50%, -50%)'}
-                    color={'white'}
-                    fontWeight={'500'}
-                    fontSize={['24px', '48px']}
-                    lineHeight={['100%', '142.6%']}
-                    w={['90%', 'unset']}
-                    textAlign={['left', 'center']}
-                >
-                    {title}
-                </Text>
-            )}
-        </Box>
+            <div className="banner-spacer" />
+            {title && <p>{title}</p>}
+        </div>
     );
 };
 

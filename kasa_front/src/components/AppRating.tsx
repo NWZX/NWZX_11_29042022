@@ -1,6 +1,6 @@
-import { Flex } from '@chakra-ui/react';
 import React, { Fragment } from 'react';
 import IconStar from '../icons/IconStar';
+import './AppRating.scss';
 
 interface Props {
     maxRating?: number;
@@ -16,7 +16,7 @@ interface Props {
 const AppRating: React.VFC<Props> = ({ maxRating = 5, rating, color, icon, gap }) => {
     const isIcon = React.isValidElement(icon);
     return (
-        <Flex gap={gap}>
+        <div className="app_rating" style={{ gap: gap }}>
             {[...Array(maxRating)].map((_, i) => {
                 if (isIcon) {
                     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -30,7 +30,7 @@ const AppRating: React.VFC<Props> = ({ maxRating = 5, rating, color, icon, gap }
                     return <IconStar key={i} color={i < rating ? 'primary.main' : 'secondary.ghost'} />;
                 }
             })}
-        </Flex>
+        </div>
     );
 };
 

@@ -1,36 +1,47 @@
-import {
-    Accordion,
-    AccordionButton,
-    AccordionIcon,
-    AccordionItem,
-    AccordionPanel,
-    Avatar,
-    Box,
-    Flex,
-    Grid,
-    GridItem,
-    HStack,
-    List,
-    ListItem,
-    Spinner,
-    Tag,
-    Text,
-} from '@chakra-ui/react';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AppCarousel from '../components/AppCarousel';
 import AppContainer from '../components/AppContainer';
 import AppRating from '../components/AppRating';
-import { useHouseContext } from '../context/DataContext';
+import { Helmet, MediaQuerySelector, useHouseContext } from '../context/DataContext';
 import IconStar from '../icons/IconStar';
-import { Helmet } from 'react-helmet-async';
+import {
+    CustomCollapsable,
+    CustomCollapsableButton,
+    CustomCollapsableItem,
+    CustomCollapsablePanel,
+} from '../components/CustomCollapsable';
+import './House.scss';
+import Flex from '../componentLakra/Flex/Flex';
 
 interface Props {}
 
 const HousePage: React.VFC<Props> = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const [house] = useHouseContext(id || null);
+    const [house] = useHouseContext(id as string);
+
+    /*
+        MediaQuerySelector is a function that returns the correct value for the current screen size
+         - Why is it used here?
+        Because we want to have different values for different screen sizes.
+        But MediaQuerySelector is a function that contains UseEffect logic so it can't be in branch logic code (aka if/else).
+        Unless i revamp every compotent to include MediaQuerySelector logic in their render method.
+        So i decided to use MediaQuerySelector here because making a UI Framework like ChakraUI is a lot of work.
+        And i don't want to do that.
+        ¯\_(ツ)_/¯
+    */
+    const header_height = MediaQuerySelector(['225px', '415px']);
+    const grid_gap = MediaQuerySelector(['3px', '20px']);
+    const grid_item1 = MediaQuerySelector(['span 12 / span 12', 'span 8 / span 8']);
+    const grid_item2 = MediaQuerySelector(['span 12 / span 12', 'span 4 / span 4']);
+    const icon_size = MediaQuerySelector(['15px', '30px']);
+    const grid2_tColumns = MediaQuerySelector(['repeat(1, 1fr)', 'repeat(2, 1fr)']);
+    const grid2_gap = MediaQuerySelector(['0px', '20px']);
+    const tagGroup_top = MediaQuerySelector(['3px', '6px']);
+    const tag_padding = MediaQuerySelector(['1.25rem', '1.75rem']);
+    const tag_fontSize = MediaQuerySelector(['10px', '14px']);
+
     if (!id) {
         navigate('/404');
         return null;
@@ -38,131 +49,104 @@ const HousePage: React.VFC<Props> = () => {
 
     return house ? (
         <AppContainer>
-            <Helmet>
-                <title>{house.title}</title>
-            </Helmet>
-            <AppCarousel images={house.pictures} imageFormat={{ w: '100%', h: ['255px', '415px'] }} />
-            <Grid templateColumns={'repeat(12, 1fr)'} w={'100%'} gap={[3, 20]}>
-                <GridItem colSpan={[12, 8]}>
-                    <Flex flexDir={'column'}>
-                        <Text fontSize={[18, 36]} lineHeight={'142.6%'} color={'primary.main'} textAlign={'left'}>
-                            {house.title}
-                        </Text>
-                        <Text fontSize={[14, 18]} lineHeight={'142.6%'} color={'primary.main'} textAlign={'left'}>
-                            {house.location}
-                        </Text>
+            <Helmet title={house.title} />
+            <AppCarousel images={house.pictures} imageFormat={{ w: '100%', h: header_height }} />
+
+            <div id="house_sub_header_grid_container" style={{ gap: grid_gap }}>
+                <div style={{ gridColumn: grid_item1 }}>
+                    <Flex direction={'column'}>
+                        <p className="sub_header_title">{house.title}</p>
+                        <p className="sub_header_location">{house.location}</p>
                     </Flex>
-                    <HStack mt={[3, 6]}>
+                    <Flex direction={'row'} style={{ marginTop: tagGroup_top, gap: '5px' }}>
                         {house.tags.map((tag, i) => (
-                            <Tag
+                            <span
                                 key={i}
-                                bgColor={'primary.main'}
-                                px={[5, 7]}
-                                borderRadius={10}
-                                fontSize={[10, 14]}
-                                lineHeight={'142.6%'}
-                                color={'white'}
-                                textAlign={'center'}
+                                className="sub_header_tag"
+                                style={{
+                                    paddingInlineStart: tag_padding,
+                                    paddingInlineEnd: tag_padding,
+                                    fontSize: tag_fontSize,
+                                }}
                             >
                                 {tag}
-                            </Tag>
+                            </span>
                         ))}
-                    </HStack>
-                </GridItem>
-                <GridItem colSpan={[12, 4]}>
+                    </Flex>
+                </div>
+                <div style={{ gridColumn: grid_item2 }}>
                     <Flex
                         direction={['row-reverse', 'column']}
                         justifyContent={['space-between', 'unset']}
-                        gap={[0, 5]}
+                        gap={['0px', '5px']}
+                        alignItems={['center', 'end']}
                     >
-                        <HStack justifyContent={['end']}>
-                            <Text
-                                fontSize={[12, 18]}
-                                lineHeight={'142.6%'}
-                                color={'primary.main'}
-                                alignSelf={'center'}
-                                textAlign={'right'}
-                            >
+                        <Flex direction={'row'} justifyContent={'end'} alignItems={'center'}>
+                            <p className="sub_header_author">
                                 {house.host.name.split(' ')[0]} <br /> {house.host.name.split(' ')[1]}
-                            </Text>
-                            <Avatar name={house.host.name} src={house.host.picture} />
-                        </HStack>
-                        <Flex justifyContent={['start', 'end']} alignItems="center">
+                            </p>
+                            <span className="sub_header_avatar">
+                                <img src={house.host.picture} alt={house.host.name} />
+                            </span>
+                        </Flex>
+                        <Flex>
                             <AppRating
                                 rating={parseInt(house.rating)}
-                                icon={<IconStar w={[15, 30]} h={[15, 30]} />}
-                                color={{ default: 'secondary.ghost', hover: 'primary.main' }}
+                                icon={
+                                    <IconStar
+                                        style={{
+                                            width: icon_size,
+                                            height: icon_size,
+                                        }}
+                                    />
+                                }
+                                color={{ default: '#E3E3E3', hover: '#FF6060' }}
                                 gap={2}
                             />
                         </Flex>
                     </Flex>
-                </GridItem>
-            </Grid>
-            <Grid templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)']} w={'100%'} gap={[0, 20]}>
-                <GridItem>
-                    <Accordion defaultIndex={[0]} allowMultiple w={'100%'}>
-                        <AccordionItem borderRadius={5} mb={8}>
-                            <Box as={'h2'} bgColor={'primary.main'} color={'white'} borderRadius={5}>
-                                <AccordionButton>
-                                    <Text
-                                        flex="1"
-                                        textAlign="left"
-                                        fontSize={[13, 24]}
-                                        fontWeight={500}
-                                        lineHeight={'142.6%'}
-                                    >
-                                        Description
-                                    </Text>
-                                    <AccordionIcon w={['32px', '36px']} h={['32px', '36px']} />
-                                </AccordionButton>
-                            </Box>
-                            <AccordionPanel pb={4} bgColor={'secondary.main'} borderRadius={'0 0 5px 5px'}>
-                                <Text fontSize={[12, 18]} fontWeight={400} lineHeight={'142.6%'} color={'primary.main'}>
-                                    {house.description}
-                                </Text>
-                            </AccordionPanel>
-                        </AccordionItem>
-                    </Accordion>
-                </GridItem>
-                <GridItem>
-                    <Accordion defaultIndex={[0]} allowMultiple w={'100%'}>
-                        <AccordionItem borderRadius={5} mb={8}>
-                            <Box as={'h2'} bgColor={'primary.main'} color={'white'} borderRadius={5}>
-                                <AccordionButton>
-                                    <Text
-                                        flex="1"
-                                        textAlign="left"
-                                        fontSize={[13, 24]}
-                                        fontWeight={500}
-                                        lineHeight={'142.6%'}
-                                    >
-                                        Équipements
-                                    </Text>
-                                    <AccordionIcon w={['32px', '36px']} h={['32px', '36px']} />
-                                </AccordionButton>
-                            </Box>
-                            <AccordionPanel pb={4} bgColor={'secondary.main'} borderRadius={'0 0 5px 5px'}>
-                                <List spacing={1}>
+                </div>
+            </div>
+            <div
+                id="house_collapsable"
+                style={{ display: 'grid', gridTemplateColumns: grid2_tColumns, width: '100%', gap: grid2_gap }}
+            >
+                <div>
+                    <CustomCollapsable>
+                        <CustomCollapsableItem open>
+                            <h2 className="collapsable_title">
+                                <CustomCollapsableButton>
+                                    <p className="collapsable_button_title">Description</p>
+                                </CustomCollapsableButton>
+                            </h2>
+                            <CustomCollapsablePanel>
+                                <p className="collapsable_description">{house.description}</p>
+                            </CustomCollapsablePanel>
+                        </CustomCollapsableItem>
+                    </CustomCollapsable>
+                </div>
+                <div>
+                    <CustomCollapsable>
+                        <CustomCollapsableItem open>
+                            <h2 className="collapsable_title">
+                                <CustomCollapsableButton>
+                                    <p className="collapsable_button_title">Équipements</p>
+                                </CustomCollapsableButton>
+                            </h2>
+                            <CustomCollapsablePanel>
+                                <ul className="custom_collapsable_list">
                                     {house.equipments.map((equipment, i) => (
-                                        <ListItem
-                                            key={i}
-                                            fontSize={[12, 18]}
-                                            fontWeight={400}
-                                            lineHeight={'142.6%'}
-                                            color={'primary.main'}
-                                        >
-                                            {equipment}
-                                        </ListItem>
+                                        <li key={i}>{equipment}</li>
                                     ))}
-                                </List>
-                            </AccordionPanel>
-                        </AccordionItem>
-                    </Accordion>
-                </GridItem>
-            </Grid>
+                                </ul>
+                            </CustomCollapsablePanel>
+                        </CustomCollapsableItem>
+                    </CustomCollapsable>
+                </div>
+            </div>
         </AppContainer>
     ) : (
-        <Spinner />
+        <div className="home_spinner"></div>
     );
 };
 

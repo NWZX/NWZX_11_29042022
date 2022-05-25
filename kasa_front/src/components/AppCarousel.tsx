@@ -1,10 +1,11 @@
-import { Box, IconButton, Image as ChakraImage } from '@chakra-ui/react';
 import React from 'react';
+import { MediaQuerySelector } from '../context/DataContext';
 import IconChevronRight from '../icons/IconChevronRight';
+import './AppCarousel.scss';
 
 interface Props {
     images: string[];
-    imageFormat?: { w?: string | string[]; h?: string | string[] };
+    imageFormat?: { w?: string; h?: string };
 }
 
 const AppCarousel: React.VFC<Props> = ({ images, imageFormat }) => {
@@ -27,63 +28,51 @@ const AppCarousel: React.VFC<Props> = ({ images, imageFormat }) => {
     };
 
     return (
-        <Box id="carousel" position={'relative'} borderRadius={25} textAlign={'center'} w={'100%'}>
-            <ChakraImage
+        <div id="carousel">
+            <img
                 src={images[currentImage]}
-                borderRadius={[10, 25]}
-                w={imageFormat?.w}
-                h={imageFormat?.h}
-                fit="cover"
+                style={{ width: imageFormat?.w, height: imageFormat?.h }}
+                width={imageFormat?.w}
+                height={imageFormat?.h}
                 onLoad={preload}
             />
-            <Box
-                w={'100%'}
-                h={'100%'}
-                top={'50%'}
-                transform={'translate(0%, -50%)'}
-                position={'absolute'}
-                backgroundColor={'#000000'}
-                mixBlendMode="darken"
-                opacity={0.3}
-                borderRadius={[10, 25]}
-            />
+            <div className="app_carousel_filter" />
             {images.length > 1 && (
                 <>
-                    {' '}
-                    <IconButton
-                        variant={'unstyled'}
-                        w={['12px', '48px']}
-                        h={['20px', '80px']}
-                        top={'50%'}
-                        left={'2%'}
-                        transform={'translate(0%, -50%)'}
-                        position={'absolute'}
-                        icon={
-                            <IconChevronRight
-                                transform={'rotate(180deg)'}
-                                w={['12px', '48px']}
-                                h={['20px', '80px']}
-                                color={'white'}
-                            />
-                        }
+                    <button
+                        type="button"
+                        className="app_carousel_arrow_button"
+                        style={{ left: '2%' }}
                         aria-label="Previous"
                         onClick={() => changeImage('prev')}
-                    />
-                    <IconButton
-                        variant={'unstyled'}
-                        w={['12px', '48px']}
-                        h={['20px', '80px']}
-                        top={'50%'}
-                        right={'2%'}
-                        transform={'translate(0%, -50%)'}
-                        position={'absolute'}
-                        icon={<IconChevronRight w={['12px', '48px']} h={['20px', '80px']} color={'white'} />}
+                    >
+                        <IconChevronRight
+                            style={{
+                                width: MediaQuerySelector(['12px', '48px']),
+                                height: MediaQuerySelector(['20px', '80px']),
+                                transform: 'rotate(180deg)',
+                            }}
+                            color={'white'}
+                        />
+                    </button>
+                    <button
+                        type="button"
+                        className="app_carousel_arrow_button"
+                        style={{ right: '2%' }}
                         aria-label="Next"
                         onClick={() => changeImage('next')}
-                    />
+                    >
+                        <IconChevronRight
+                            color={'white'}
+                            style={{
+                                width: MediaQuerySelector(['12px', '48px']),
+                                height: MediaQuerySelector(['20px', '80px']),
+                            }}
+                        />
+                    </button>
                 </>
             )}
-        </Box>
+        </div>
     );
 };
 

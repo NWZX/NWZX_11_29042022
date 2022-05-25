@@ -1,0 +1,35 @@
+.collapsable_title {
+    color: white;
+    background-color: #FF6060;
+    border-radius: 5px;
+}
+.collapsable_button_title {
+    flex: 1;
+    text-align: left;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 142.6%;
+}
+.collapsable_description {
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 142.6%;
+        color: #FF6060;
+}
+.custom_collapsable {
+    padding-inline-start: 10%;
+    padding-inline-end: 10%;
+}
+
+@media (max-width: 500px) {
+    .collapsable_button_title {
+        font-size: 13px;
+    }
+    .collapsable_description {
+        font-size: 12px;
+    }
+    .custom_collapsable {
+        padding-inline-start: 0%;
+        padding-inline-end: 0%;
+    }
+}

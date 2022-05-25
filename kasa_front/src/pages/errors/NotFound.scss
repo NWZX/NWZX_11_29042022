@@ -1,0 +1,44 @@
+.notFound_vstack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #FF6060;
+}
+.notFound_text_1 {
+    font-size: 288px;
+    font-weight: 700px;
+    line-height: 142.6%;
+    padding-bottom: 66px;
+}
+.notFound_text_2 {
+    font-size: 36px;
+    font-weight: 500px;
+    line-height: 142.6%;
+    padding-bottom: 182px;
+    text-align: center;
+}
+.notFound_link {
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500px;
+    line-height: 142.6%;
+}
+.notFound_link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 500px) {
+  .notFound_text_1 {
+    font-size: 96px;
+    padding-bottom: 66px;
+  }
+  .notFound_text_2 {
+    font-size: 18px;
+    padding-bottom: 133px;
+  }
+  .notFound_link {
+    font-size: 14px;
+  }
+}

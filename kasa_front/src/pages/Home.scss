@@ -1,0 +1,48 @@
+#cardCollection {
+    display: grid;
+    background-color: #f7f7f7;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3.5rem;
+    width: 100%;
+    border-radius: 25px;
+    padding: 3rem;
+
+    @media (max-width: 500px) {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1.75rem;
+        padding: 0;
+        background: unset;
+    }
+}
+
+@keyframes spinn {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg),
+    }
+}
+.home_spinner {
+    display: inline-block;
+    border-color: currentColor;
+    border-style: solid;
+    border-radius: 99999px;
+    border-width: 2px;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    animation: spinn 0.45s linear infinite;
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.home_sub_spin {
+    border: 0px;
+    clip: rect(0px, 0px, 0px, 0px);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0px;
+    overflow: hidden;
+    white-space: nowrap;
+    position: absolute;
+}

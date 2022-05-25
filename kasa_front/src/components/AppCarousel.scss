@@ -1,0 +1,48 @@
+#carousel {
+    position: relative;
+    border-radius: 25px;
+    text-align: center;
+    width: 100%;
+}
+#carousel img {
+    display: block;
+    object-fit: cover;
+    border-radius: 25px;
+}
+.app_carousel_filter {
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    transform: translate(0%, -50%);
+    position: absolute;
+    background-color: black;
+    mix-blend-mode: darken;
+    opacity: 0.3;
+    border-radius: 25px;
+}
+.app_carousel_arrow_button {
+    width: 48px;
+    height: 80px;
+    top: 50%;
+    right: 2%;
+    transform: translate(0%, -50%);
+    position: absolute;
+    background-color: transparent;
+}
+.app_carousel_arrow_button:focus {
+    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.6);
+    border-radius: 10px;
+}
+
+@media (max-width: 500px) {
+    #carousel img {
+        border-radius: 10px;
+    }
+    .app_carousel_filter {
+        border-radius: 10px;
+    }
+    .app_carousel_arrow_button {
+        width: 12px;
+        height: 20px;
+    }
+}

@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useContext, useEffect, useReducer } from 'react';
+import React, { createContext, ReactNode, useContext, useEffect, useReducer, useState } from 'react';
 import { IAbout } from '../interfaces/IAbout';
 import { IHouse } from '../interfaces/IHouse';
 
@@ -30,7 +30,6 @@ interface IReducerAction {
 }
 
 function reducer(state: IDataContext, action: IReducerAction): IDataContext {
-    console.log('reducer', action);
     switch (action.type) {
         case 'houses':
             return { ...state, ...action.payload };
@@ -84,6 +83,11 @@ export const useHousesContext = (start?: number, limit?: number): THousesContext
                     setError(error);
                 });
         }
+        () => {
+            setHouses([]);
+            setIsLoading(false);
+            setError(undefined);
+        };
     }, [context.apiRoute, context.houses, dispatch, error, isLoading]);
 
     return [start || limit ? houses.slice(start, limit) : houses, isLoading, error];
@@ -111,6 +115,11 @@ export const useHouseContext = (id: string | null): THouseContext => {
                     setError(error);
                 });
         }
+        () => {
+            setHouse(undefined);
+            setIsLoading(false);
+            setError(undefined);
+        };
     }, [context.apiRoute, context.houses, dispatch, error, id, isLoading]);
 
     return [house, isLoading, error];
@@ -141,4 +150,45 @@ export const useAboutContext = (): [IAbout[], boolean, Error | undefined] => {
     ];
 
     return [data, false, undefined];
+};
+
+export const useMediaQuery = (query: string): boolean => {
+    const [matches, setMatches] = useState<boolean>(false);
+
+    useEffect(() => {
+        const mediaQuery = window.matchMedia(query);
+        setMatches(mediaQuery.matches);
+        const listener = (e: MediaQueryListEvent): void => setMatches(e.matches);
+        mediaQuery.addEventListener('change', listener);
+        return () => mediaQuery.removeEventListener('change', listener);
+    }, [query]);
+
+    return matches;
+};
+
+export type ResponsiveCSSProperties<T> = [T?, T?, T?, T?, T?];
+export const MediaQuerySelector = <T,>(value: ResponsiveCSSProperties<T> | T): T | undefined => {
+    const list = [
+        useMediaQuery('(min-width: 80em)'),
+        useMediaQuery('(min-width: 62em)'),
+        useMediaQuery('(min-width: 48em)'),
+        useMediaQuery('(min-width: 30em)'),
+        useMediaQuery('(min-width: 0em)'),
+    ];
+    const safeValue = Array.isArray(value) ? value : [value];
+
+    let result: T | undefined = undefined;
+    for (let i = 0; i < 5; i++) {
+        if (!safeValue[i] || !list[4 - i]) continue;
+        result = safeValue[i];
+    }
+
+    return result;
+};
+
+export const Helmet: React.VFC<{ title: string }> = ({ title }) => {
+    useEffect(() => {
+        document.title = title;
+    }, [title]);
+    return <></>;
 };
