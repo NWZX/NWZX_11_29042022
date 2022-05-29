@@ -1,4 +1,5 @@
 import React from 'react';
+import Spinner from '../componentLakra/Spinner/Spinner';
 import AppBanner from '../components/AppBanner';
 import AppContainer from '../components/AppContainer';
 import HouseCard from '../components/HouseCard';
@@ -27,7 +28,7 @@ const HomePage: React.VFC<Props> = () => {
                                 textAlign: 'center',
                             }}
                         >
-                            <div className="home_spinner"></div>
+                            <Spinner />
                         </div>
                     ) : (
                         houses?.map((house) => (

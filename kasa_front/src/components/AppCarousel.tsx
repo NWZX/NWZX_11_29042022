@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { MediaQuerySelector } from '../context/DataContext';
 import IconChevronRight from '../icons/IconChevronRight';
 import './AppCarousel.scss';
@@ -10,11 +10,23 @@ interface Props {
 
 const AppCarousel: React.VFC<Props> = ({ images, imageFormat }) => {
     const [currentImage, setCurrentImage] = React.useState(0);
+    const imageRef = useRef<HTMLImageElement>(null);
+
     const changeImage = (direction: 'next' | 'prev'): void => {
         if (direction === 'next') {
             setCurrentImage(currentImage + 1 >= images.length ? 0 : currentImage + 1);
+
+            //CSS Trick to re-animate the image
+            imageRef.current?.classList.remove('carousel-image-animate');
+            void imageRef.current?.offsetWidth;
+            imageRef.current?.classList.add('carousel-image-animate');
         } else {
             setCurrentImage(currentImage - 1 >= 0 ? currentImage - 1 : images.length - 1);
+
+            //CSS Trick to re-animate the image
+            imageRef.current?.classList.remove('carousel-image-animate');
+            void imageRef.current?.offsetWidth;
+            imageRef.current?.classList.add('carousel-image-animate');
         }
     };
     const preload = (): void => {
@@ -30,6 +42,7 @@ const AppCarousel: React.VFC<Props> = ({ images, imageFormat }) => {
     return (
         <div id="carousel">
             <img
+                ref={imageRef}
                 src={images[currentImage]}
                 style={{ width: imageFormat?.w, height: imageFormat?.h }}
                 width={imageFormat?.w}

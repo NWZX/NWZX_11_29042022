@@ -13,6 +13,7 @@ import {
 } from '../components/CustomCollapsable';
 import './House.scss';
 import Flex from '../componentLakra/Flex/Flex';
+import Spinner from '../componentLakra/Spinner/Spinner';
 
 interface Props {}
 
@@ -22,14 +23,15 @@ const HousePage: React.VFC<Props> = () => {
     const [house] = useHouseContext(id as string);
 
     /*
+        To my future self, please don't judge me for this code.
         MediaQuerySelector is a function that returns the correct value for the current screen size
          - Why is it used here?
         Because we want to have different values for different screen sizes.
         But MediaQuerySelector is a function that contains UseEffect logic so it can't be in branch logic code (aka if/else).
         Unless i revamp every compotent to include MediaQuerySelector logic in their render method.
         So i decided to use MediaQuerySelector here because making a UI Framework like ChakraUI is a lot of work.
-        And i don't want to do that.
-        ¯\_(ツ)_/¯
+        And i don't want to do that now.
+        Maybe later ¯\_(ツ)_/¯
     */
     const header_height = MediaQuerySelector(['225px', '415px']);
     const grid_gap = MediaQuerySelector(['3px', '20px']);
@@ -146,7 +148,7 @@ const HousePage: React.VFC<Props> = () => {
             </div>
         </AppContainer>
     ) : (
-        <div className="home_spinner"></div>
+        <Spinner />
     );
 };
 

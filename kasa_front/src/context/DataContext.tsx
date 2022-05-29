@@ -3,6 +3,7 @@ import { IAbout } from '../interfaces/IAbout';
 import { IHouse } from '../interfaces/IHouse';
 
 const dataFetch = <T,>(url: string): Promise<T> => fetch(url).then<T>((r) => r.json() as Promise<T>);
+
 // const dataPost = <T, D>(url: string, data: D, method: 'POST' | 'PUT' | 'DELETE' = 'POST'): Promise<T> =>
 //     fetch(url, {
 //         method: method,
@@ -166,7 +167,14 @@ export const useMediaQuery = (query: string): boolean => {
     return matches;
 };
 
+//#region Media queries management
+
 export type ResponsiveCSSProperties<T> = [T?, T?, T?, T?, T?];
+/**
+ * Selects the last breakpoint where the media query matches
+ * @param value CSS property responsive values
+ * @returns Matching responsive value
+ */
 export const MediaQuerySelector = <T,>(value: ResponsiveCSSProperties<T> | T): T | undefined => {
     const list = [
         useMediaQuery('(min-width: 80em)'),
@@ -186,9 +194,16 @@ export const MediaQuerySelector = <T,>(value: ResponsiveCSSProperties<T> | T): T
     return result;
 };
 
+/**
+ * Change the title of the page
+ * @param param0 Title of the page
+ * @returns Nothing
+ */
 export const Helmet: React.VFC<{ title: string }> = ({ title }) => {
     useEffect(() => {
         document.title = title;
     }, [title]);
     return <></>;
 };
+
+//#endregion

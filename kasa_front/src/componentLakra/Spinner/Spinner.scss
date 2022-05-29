@@ -1,0 +1,24 @@
+.cmp_spinner {
+    display: inline-block;
+    border-color: currentColor;
+    border-style: solid;
+    border-radius: 99999px;
+    border-width: 2px;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    animation: spinn 0.45s linear infinite;
+    width: 1.5rem;
+    height: 1.5rem;
+
+    & .cmp_sub_spin {
+        border: 0px;
+        clip: rect(0px, 0px, 0px, 0px);
+        height: 1px;
+        width: 1px;
+        margin: -1px;
+        padding: 0px;
+        overflow: hidden;
+        white-space: nowrap;
+        position: absolute;
+    }
+}

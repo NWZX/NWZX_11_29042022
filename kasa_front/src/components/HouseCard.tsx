@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { IHouse } from '../interfaces/IHouse';
 import './HouseCard.scss';
 
@@ -7,13 +8,12 @@ interface Props {
 }
 
 const HouseCard: React.VFC<Props> = ({ houseData }) => {
+    const navigate = useNavigate();
     return (
-        <div className="house_card_container">
+        <div className="house_card_container" onClick={() => navigate(`/houses/${houseData.id}`)}>
             <img src={houseData.pictures[0]} alt={''} />
             <div className="house_card_filter" />
-            <a className="house_card_link" href={`/houses/${houseData.id}`}>
-                {houseData.title}
-            </a>
+            <span className="house_card_link">{houseData.title}</span>
         </div>
     );
 };

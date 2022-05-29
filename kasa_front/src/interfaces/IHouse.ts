@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 export interface IHouse {
     id: string;
     title: string;
