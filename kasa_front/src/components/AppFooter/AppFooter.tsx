@@ -1,5 +1,5 @@
 import React from 'react';
-import IconLogo from '../icons/Logo';
+import IconLogo from 'icons/Logo';
 import './AppFooter.scss';
 
 interface Props {}

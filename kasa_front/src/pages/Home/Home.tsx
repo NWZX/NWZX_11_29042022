@@ -1,9 +1,9 @@
 import React from 'react';
-import Spinner from '../componentLakra/Spinner/Spinner';
-import AppBanner from '../components/AppBanner';
-import AppContainer from '../components/AppContainer';
-import HouseCard from '../components/HouseCard';
-import { Helmet, MediaQuerySelector, useHousesContext } from '../context/DataContext';
+import Spinner from 'components/Spinner/Spinner';
+import AppBanner from 'components/AppBanner/AppBanner';
+import AppContainer from 'components/AppContainer/AppContainer';
+import HouseCard from 'components/HouseCard/HouseCard';
+import { Helmet, MediaQuerySelector, useHousesContext } from 'contexts/DataContext';
 import './Home.scss';
 
 interface Props {}

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
-import { MediaQuerySelector } from '../context/DataContext';
-import IconChevronRight from '../icons/IconChevronRight';
+import { MediaQuerySelector } from 'contexts/DataContext';
+import IconChevronRight from 'icons/IconChevronRight';
 import './AppCarousel.scss';
 
 interface Props {

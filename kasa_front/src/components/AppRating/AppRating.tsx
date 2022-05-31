@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import IconStar from '../icons/IconStar';
+import IconStar from 'icons/IconStar';
 import './AppRating.scss';
 
 interface Props {

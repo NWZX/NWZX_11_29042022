@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import HomePage from './pages/Home';
-import HousePage from './pages/House';
-import NotFoundPage from './pages/errors/NotFound';
-import AboutPage from './pages/About';
-import { DataContextProvider } from './context/DataContext';
+import HomePage from 'pages/Home/Home';
+import HousePage from 'pages/House/House';
+import NotFoundPage from 'pages/NotFound/NotFound';
+import AboutPage from 'pages/About/About';
+import { DataContextProvider } from 'contexts/DataContext';
 import './App.scss';
 
 export const App = (): JSX.Element => (

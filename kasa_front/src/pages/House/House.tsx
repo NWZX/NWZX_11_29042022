@@ -1,26 +1,27 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import AppCarousel from '../components/AppCarousel';
-import AppContainer from '../components/AppContainer';
-import AppRating from '../components/AppRating';
-import { Helmet, MediaQuerySelector, useHouseContext } from '../context/DataContext';
-import IconStar from '../icons/IconStar';
+import AppCarousel from 'components/AppCarousel/AppCarousel';
+import AppContainer from 'components/AppContainer/AppContainer';
+import AppRating from 'components/AppRating/AppRating';
+import { Helmet, MediaQuerySelector, useHouseContext } from 'contexts/DataContext';
+import IconStar from 'icons/IconStar';
 import {
     CustomCollapsable,
     CustomCollapsableButton,
     CustomCollapsableItem,
     CustomCollapsablePanel,
-} from '../components/CustomCollapsable';
+} from 'components/CustomCollapsable/CustomCollapsable';
 import './House.scss';
-import Flex from '../componentLakra/Flex/Flex';
-import Spinner from '../componentLakra/Spinner/Spinner';
+import Flex from 'components/Flex/Flex';
+import Spinner from 'components/Spinner/Spinner';
 
 interface Props {}
 
 const HousePage: React.VFC<Props> = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const [house] = useHouseContext(id as string);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [house, isLoading, error] = useHouseContext(id as string);
 
     /*
         To my future self, please don't judge me for this code.
@@ -44,7 +45,7 @@ const HousePage: React.VFC<Props> = () => {
     const tag_padding = MediaQuerySelector(['1.25rem', '1.75rem']);
     const tag_fontSize = MediaQuerySelector(['10px', '14px']);
 
-    if (!id) {
+    if (!id || error) {
         navigate('/404');
         return null;
     }

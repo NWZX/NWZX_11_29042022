@@ -1,6 +1,6 @@
 import React from 'react';
-import { MediaQuerySelector } from '../context/DataContext';
-import IconLogo from '../icons/Logo';
+import { MediaQuerySelector } from 'contexts/DataContext';
+import IconLogo from 'icons/Logo';
 import './AppHeader.scss';
 
 interface Props {}

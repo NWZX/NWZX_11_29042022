@@ -1,13 +1,13 @@
 import React from 'react';
-import AppBanner from '../components/AppBanner';
-import AppContainer from '../components/AppContainer';
+import AppBanner from 'components/AppBanner/AppBanner';
+import AppContainer from 'components/AppContainer/AppContainer';
 import {
     CustomCollapsableItem,
     CustomCollapsable,
     CustomCollapsableButton,
     CustomCollapsablePanel,
-} from '../components/CustomCollapsable';
-import { Helmet, MediaQuerySelector, useAboutContext } from '../context/DataContext';
+} from 'components/CustomCollapsable/CustomCollapsable';
+import { Helmet, MediaQuerySelector, useAboutContext } from 'contexts/DataContext';
 import './About.scss';
 
 interface Props {}

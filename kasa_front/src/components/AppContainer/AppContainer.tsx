@@ -1,6 +1,6 @@
 import React from 'react';
-import AppFooter from './AppFooter';
-import AppHeader from './AppHeader';
+import AppFooter from 'components/AppFooter/AppFooter';
+import AppHeader from 'components/AppHeader/AppHeader';
 import './AppContainer.scss';
 
 interface Props {}

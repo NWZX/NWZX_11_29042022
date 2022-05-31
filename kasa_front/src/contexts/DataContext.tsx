@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useContext, useEffect, useReducer, useState } from 'react';
-import { IAbout } from '../interfaces/IAbout';
-import { IHouse } from '../interfaces/IHouse';
+import { IAbout } from 'interfaces/IAbout';
+import { IHouse } from 'interfaces/IHouse';
 
 const dataFetch = <T,>(url: string): Promise<T> => fetch(url).then<T>((r) => r.json() as Promise<T>);
 
@@ -103,7 +103,14 @@ export const useHouseContext = (id: string | null): THouseContext => {
 
     useEffect(() => {
         if (id && context.houses && context.houses.timestamp - Date.now() < 60000) {
-            setHouse(context.houses.data.find((h) => h.id === id));
+            const result = context.houses.data.find((h) => h.id === id);
+            if (result) {
+                setHouse(result);
+            } else {
+                setHouse(undefined);
+                setIsLoading(false);
+                setError(new Error('Not Found'));
+            }
         } else if (id && !isLoading && !error) {
             setIsLoading(true);
             dataFetch<IHouse[]>(context.apiRoute)

@@ -1,5 +1,5 @@
 import React from 'react';
-import AppContainer from '../../components/AppContainer';
+import AppContainer from 'components/AppContainer/AppContainer';
 import './NotFound.scss';
 
 interface Props {}

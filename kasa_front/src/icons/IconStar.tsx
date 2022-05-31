@@ -1,5 +1,5 @@
 import React from 'react';
-import { IIconProps } from '../interfaces/IIconProps';
+import { IIconProps } from 'interfaces/IIconProps';
 
 const IconStar = (props: IIconProps): JSX.Element => {
     return (

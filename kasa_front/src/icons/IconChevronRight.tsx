@@ -1,5 +1,5 @@
 import React from 'react';
-import { IIconProps } from '../interfaces/IIconProps';
+import { IIconProps } from 'interfaces/IIconProps';
 
 const IconChevronRight = (props: IIconProps): JSX.Element => {
     return (

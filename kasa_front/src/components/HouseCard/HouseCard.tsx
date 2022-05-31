@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IHouse } from '../interfaces/IHouse';
+import { IHouse } from 'interfaces/IHouse';
 import './HouseCard.scss';
 
 interface Props {

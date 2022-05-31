@@ -1,5 +1,5 @@
 import React from 'react';
-import { MediaQuerySelector, ResponsiveCSSProperties } from '../../context/DataContext';
+import { MediaQuerySelector, ResponsiveCSSProperties } from 'contexts/DataContext';
 import './Flex.scss';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
