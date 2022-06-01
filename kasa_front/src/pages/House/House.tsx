@@ -119,7 +119,7 @@ const HousePage: React.VFC<Props> = () => {
                         <CustomCollapsableItem open>
                             <h2 className="collapsable_title">
                                 <CustomCollapsableButton>
-                                    <p className="collapsable_button_title">Description</p>
+                                    <span className="collapsable_button_title">Description</span>
                                 </CustomCollapsableButton>
                             </h2>
                             <CustomCollapsablePanel>

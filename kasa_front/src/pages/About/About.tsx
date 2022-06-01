@@ -26,7 +26,7 @@ const AboutPage: React.VFC<Props> = () => {
                     <CustomCollapsableItem key={i}>
                         <h2 className="collapsable_title">
                             <CustomCollapsableButton>
-                                <p className="collapsable_button_title">{item.title}</p>
+                                <span className="collapsable_button_title">{item.title}</span>
                             </CustomCollapsableButton>
                         </h2>
                         <CustomCollapsablePanel>
