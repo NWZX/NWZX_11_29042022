@@ -1,6 +1,7 @@
-import React, { createContext, ReactNode, useContext, useEffect, useReducer, useState } from 'react';
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { IAbout } from 'interfaces/IAbout';
 import { IHouse } from 'interfaces/IHouse';
+import useAsyncReducer from './useAsyncReducer';
 
 const dataFetch = <T,>(url: string): Promise<T> => fetch(url).then<T>((r) => r.json() as Promise<T>);
 
@@ -30,14 +31,19 @@ interface IReducerAction {
     payload?: Record<string, any>;
 }
 
-function reducer(state: IDataContext, action: IReducerAction): IDataContext {
-    switch (action.type) {
-        case 'houses':
-            return { ...state, ...action.payload };
-        default:
-            throw new Error();
-    }
-}
+const reducer = async (state: IDataContext, action: IReducerAction): Promise<IDataContext> => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            switch (action.type) {
+                case 'houses':
+                    resolve({ ...state, ...action.payload });
+                    break;
+                default:
+                    throw new Error();
+            }
+        }, 1);
+    });
+};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const DataContext = createContext<[IDataContext, (type: TActionType, payload?: Record<string, any>) => void]>([
@@ -53,7 +59,10 @@ export const DataContextProvider = ({
     children: ReactNode;
     apiRoute?: string;
 }): JSX.Element => {
-    const [data, dispatchData] = useReducer(reducer, apiRoute ? { ...initialState, apiRoute: apiRoute } : initialState);
+    const [data, dispatchData] = useAsyncReducer(
+        reducer,
+        apiRoute ? { ...initialState, apiRoute: apiRoute } : initialState,
+    );
 
     return (
         <DataContext.Provider value={[data, (t, p) => dispatchData({ type: t, payload: p })]}>
